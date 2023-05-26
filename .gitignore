@@ -1,0 +1,8 @@
+download
+test
+__pycache__
+credentials.py
+venv
+.DS_Store
+test.py
+test_redgifs.py
