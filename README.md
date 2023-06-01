@@ -1,4 +1,6 @@
 # Reddit Saved Media Downloader
+Current version: [**0.2.0**](CHANGELOG.md)
+
 Downloads images and videos from the posts that you have saved on your Reddit account.<br>
 This is a PRAW rewrite of the scuffed-as-hell original version of the [Reddit Saved Downloader](https://github.com/goonmandu/saved_downloader) that I wrote two years ago.<br>
 I will add utility functions of the original code to this rewrite eventually.
