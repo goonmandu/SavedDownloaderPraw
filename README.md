@@ -21,6 +21,8 @@ I will add utility functions of the original code to this rewrite eventually.
 ## TODO
 - [ ] Add comment scraping
 - [ ] Pipe log to file
-- [ ] Universal download function, instead of current implementation of `download_requests`
-- [ ] Add features from RSD V1 (e.g. duplicates filter)
-- [ ] Skip already downloaded media
+- [ ] <strike>Universal download function, instead of current implementation of `download_requests`</strike><sup>[1](#footnote_1)</sup>
+- [x] Add features from RSD V1 (e.g. duplicates filter)
+- [x] Skip already downloaded media
+
+<a name="footnote_1">1</a>: Unrealistic goal, scrapped. Different websites have different download methods and would require separate functions for each website, which `download_requests` already achieves.

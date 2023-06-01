@@ -3,14 +3,44 @@ import sys
 import wget
 import requests
 import praw
+import emoji
 from credentials import *
+from excepts import SelfVideoNotSupportedError
+import signal
 
+current_directory = ""
+existing_files = []
+for root, dirs, file in os.walk(f"{os.getcwd()}/download"):
+    for name in file:
+        if name not in existing_files:
+            existing_files.append(name)
 
 requests_header = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) "
                   "AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/83.0.4103.97 Safari/537.36"
 }
+
+
+def crash_handler(exit_signal, frame):
+    global current_directory
+    if current_directory == "":
+        exit(0)
+    else:
+        os.remove(current_directory)
+        if exit_signal == signal.SIGINT:
+            exit(0)
+        else:
+            exit(3)
+
+
+def get_all_downloaded_files():
+    ret = []
+    for root, dirs, file in os.walk(f"{os.getcwd()}/download"):
+        for name in file:
+            if name not in ret:
+                ret.append(name)
+    return ret
 
 
 def extract_source_redgifs(redgifs_link):
@@ -65,12 +95,19 @@ def get_all_comments(submission):
 
 
 def download_requests(addr, path, output_name, ext, reddit_instance, subreddit):
+    global current_directory
+    web_filename = addr.split("/")[-1]
+
     if "v.redd.it" in addr:
-        return  # Reddit-hosted videos are not supported as of right now
-    if "redgifs" in addr:
+        raise SelfVideoNotSupportedError
+    elif "redgifs" in addr:
         ext = "mp4"
+        final_filename = f"{output_name}-{web_filename[:4]}.{ext}"
+        current_directory = f"{path}/{final_filename}"
+        if final_filename in existing_files:
+            return
         addr = extract_source_redgifs(addr)
-        d_img = open(f"{path}/{output_name}.{ext}", 'wb')
+        d_img = open(current_directory, 'wb')
         resp = requests.get(addr, headers=requests_header)
         d_img.write(resp.content)
         d_img.close()
@@ -78,13 +115,21 @@ def download_requests(addr, path, output_name, ext, reddit_instance, subreddit):
         image_number = 1
         for link in extract_source_reddit_gallery(reddit_instance, addr, subreddit):
             ext = link.split(".")[-1]
-            d_img = open(f"{path}/{output_name}-glry{image_number}.{ext}", 'wb')
+            final_filename = f"{output_name}-glry{image_number}-{web_filename[:4]}.{ext}"
+            current_directory = f"{path}/{final_filename}"
+            if final_filename in existing_files:
+                return
+            d_img = open(current_directory, 'wb')
             resp = requests.get(link, headers=requests_header)
             d_img.write(resp.content)
             d_img.close()
             image_number += 1
     else:
-        d_img = open(f"{path}/{output_name}.{ext}", 'wb')
+        final_filename = f"{output_name}-{web_filename[:4]}.{ext}"
+        current_directory = f"{path}/{final_filename}"
+        if final_filename in existing_files:
+            return
+        d_img = open(current_directory, 'wb')
         resp = requests.get(addr, headers=requests_header)
         d_img.write(resp.content)
         d_img.close()
@@ -96,6 +141,10 @@ def download_wget(addr, path, output_name):
 
 def remove_non_ascii(string: str) -> str:
     return ''.join(char for char in string if ord(char) < 128)
+
+
+def unemojify(string: str) -> str:
+    return emoji.demojize(string)
 
 
 def replace_invalid_chars(filepath: str) -> str:
@@ -128,10 +177,11 @@ def main():
     catbox = "https://files.catbox.moe/9jsbl9.png"
     gallery = "https://www.reddit.com/gallery/13l1zm4"
     subreddit = reddit.submission("13l1zm4").subreddit
+    print(subreddit.display_name)
 
-    create_directory("test")
+    #create_directory("test")
 
-    print(extract_source_reddit_gallery(reddit, gallery, subreddit))
+    #print(extract_source_reddit_gallery(reddit, gallery, subreddit))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,2 @@
+class SelfVideoNotSupportedError(Exception):
+    pass
