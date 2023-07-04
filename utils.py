@@ -22,6 +22,10 @@ requests_header = {
 }
 
 
+countries_that_censor = [
+    "South Korea"
+]
+
 def crash_handler(exit_signal, frame):
     global current_directory
     if current_directory == "":
@@ -102,7 +106,7 @@ def download_requests(addr, path, output_name, ext, reddit_instance, subreddit):
         raise SelfVideoNotSupportedError
     elif "redgifs" in addr:
         ext = "mp4"
-        final_filename = f"{output_name}-{web_filename[:4]}.{ext}"
+        final_filename = f"{output_name}-{web_filename[:4]}.{ext}"  # posts with same title
         current_directory = f"{path}/{final_filename}"
         if final_filename in existing_files:
             return
@@ -160,6 +164,17 @@ def replace_invalid_chars(filepath: str) -> str:
          "|":  "_",
          " ":  "_",
          ".":  "_"}))
+
+
+def get_current_country():
+    api_key = IPSTACK_KEY
+    url = f"http://api.ipstack.com/check?access_key={api_key}"
+    try:
+        response = requests.get(url)
+        data = response.json()
+        return data["country_name"]
+    except requests.exceptions.RequestException:
+        return "Unknown"
 
 
 def main():

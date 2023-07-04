@@ -5,6 +5,13 @@ from utils import *
 
 def main():
     signal.signal(signal.SIGINT, crash_handler)
+    if (current_country := get_current_country()) in countries_that_censor:
+        if not input(f"WARNING: You are trying to download from a {current_country} IP.\n"
+                     f"Downloads of explicit material may fail due to internet censorship.\n"
+                     f"Are you sure you want to continue?\n"
+                     f"Enter 'Yes' to download anyway, or anything else to quit. ") == "Yes":
+            exit(4)
+
     posts = int(input("Enter an integer number of saved posts to download, from 1 to 1000. "))
     while not 1 <= posts <= 1000:
         posts = int(input("Make sure that 1 <= (number of posts) <= 1000: "))
