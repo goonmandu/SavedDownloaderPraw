@@ -1,5 +1,9 @@
 # Changelog
-Last updated: 2023-06-02 01:00 (KST; UTC+9)
+Last updated: 2023-07-04 05:17 (KST; UTC+9)
+
+## 0.3.0
+**Committed 2023-07-04**
+- Added country detection to warn user of internet censorship
 
 ## 0.2.0
 **Committed 2023-06-02**
