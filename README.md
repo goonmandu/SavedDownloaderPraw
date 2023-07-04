@@ -1,11 +1,4 @@
 # Reddit Saved Media Downloader
-##  This project is under indefinite hiatus because of [Reddit's API changes](https://redd.it/145bram). Development will continue when API access is normalized.
-TLDR:<br>
-1. Reddit is effectively denying access to its API for third-party Reddit browsers (e.g. <img src="https://play-lh.googleusercontent.com/GF71STDEmTKhbEexCYbePXAjYym_ee8E6WR7_R8jr5_Xf10jfL0Kibkjfl33zDrJBw"  width="15"> Boost for Reddit, <img src="https://play-lh.googleusercontent.com/7eZdn-k3hT4CyxcEztIRPgZiaCS13bbombYFnonJvMRttjHFUzVSkJce61x6pyPiHQs"  width="15"> Reddit is Fun, <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Apollo_app_logo.svg/1200px-Apollo_app_logo.svg.png"  width="15"> Apollo) by demanding insanely high API pricing.
-2. Reddit is also censoring NSFW from the API that third-party Reddit browsers use. Reddit CEO [u/spez](https://reddit.com/u/spez) explained that this is to obey regulations regarding serving pornography to minors. However, the official Reddit app is still going to show NSFW. Go figure.
-
-While this script is unaffected by these API changes (due to it not being a Reddit client), its functionality will be severely undermined due to the subreddits participating in the Reddit Blackout protest, which I wholeheartedly support.
-
 Current version: [**0.2.0**](CHANGELOG.md)
 
 Downloads images and videos from the posts that you have saved on your Reddit account.<br>
