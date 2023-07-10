@@ -1,10 +1,15 @@
 # Changelog
-Last updated: 2023-07-10 10:55 (KST; UTC+9)
+Last updated: 2023-07-10 11:07 (KST; UTC+9)
 
+## 0.3.2
+**Committed 2023-07-10*
+- Show skip progress for debug skips
+- Enclose post IDs in brackets (`[1a4f6zs]`)
+- 
 ## 0.3.1
 **Committed 2023-07-10**
 - Hotfix for exceptions killing download loop
-- Print Post ID (e.g. 1a4f6zs) in main loop
+- Print Post ID (e.g. `1a4f6zs`) in main loop
 - Add debug feature to skip first N saved posts
 
 ## 0.3.0
