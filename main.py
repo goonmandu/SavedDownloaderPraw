@@ -31,12 +31,14 @@ def main():
 
     if (debug := input("Press [Enter] to begin download.")).lower().startswith("from"):
         skip = int(debug[4:])
+        print(f"Skipping until #{skip}")
     else:
         skip = 0
 
     create_directory("download")
     for idx, saved_post in enumerate(reddit.user.me().saved(limit=posts)):
         if idx < skip - 1:
+            print(f"Skipping over #{idx+1}", end="\r")
             continue
         try:
             current = PostData(saved_post, get_comments=False)
