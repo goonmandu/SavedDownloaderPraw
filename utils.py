@@ -5,7 +5,7 @@ import requests
 import praw
 import emoji
 from credentials import *
-from excepts import SelfVideoNotSupportedError
+from excepts import *
 import signal
 
 current_directory = ""
@@ -191,8 +191,8 @@ def main():
     rule34 = "https://rule34.xxx//samples/6724/sample_e8c7589fbace0156bf8c61a34d057cbc.jpg?7674649"
     catbox = "https://files.catbox.moe/9jsbl9.png"
     gallery = "https://www.reddit.com/gallery/13l1zm4"
-    subreddit = reddit.submission("13l1zm4").subreddit
-    print(subreddit.display_name)
+    post = reddit.submission("14g8qld").is_self
+    print(post)
 
     #create_directory("test")
 
