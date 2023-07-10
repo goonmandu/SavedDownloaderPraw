@@ -1,6 +1,10 @@
 # Changelog
 Last updated: 2023-07-10 11:07 (KST; UTC+9)
 
+## 0.3.3
+**Committed 2023-07-10**
+- Add countries where pornography is illegal to `countries_that_censor` in `utils.py`
+
 ## 0.3.2
 **Committed 2023-07-10**
 - Show skip progress for debug skips
