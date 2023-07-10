@@ -23,8 +23,40 @@ requests_header = {
 
 
 countries_that_censor = [
-    "South Korea"
+    "Armenia"
+    "South Korea",
+    "Bahrain"
+    "Belarus",
+    "Brunei",
+    "Syria",
+    "Saudi Arabia",
+    "Yemen",
+    "Oman",
+    "Eritrea"
+    "Equatorial Guinea",
+    "Uganda",
+    "Tanzania",
+    "Iran",
+    "Kuwait",
+    "Qatar",
+    "United Arab Emirates",
+    "Turkmenistan",
+    "Uzbekistan",
+    "Afghanistan",
+    "Pakistan"
+    "China",
+    "Nepal",
+    "Bangladesh",
+    "Vietnam",
+    "Laos",
+    "Thailand",
+    "Cambodia",
+    "Malaysia",
+    "Indonesia",
+    "North Korea",  # But no one's gonna be using it here anyway LULW
+    "Maldives"
 ]
+
 
 def crash_handler(exit_signal, frame):
     global current_directory
