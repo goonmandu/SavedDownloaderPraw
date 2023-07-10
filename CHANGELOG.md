@@ -1,5 +1,11 @@
 # Changelog
-Last updated: 2023-07-04 17:17 (KST; UTC+9)
+Last updated: 2023-07-10 10:55 (KST; UTC+9)
+
+## 0.3.1
+**Committed 2023-07-10**
+- Hotfix for exceptions killing download loop
+- Print Post ID (e.g. 1a4f6zs) in main loop
+- Add debug feature to skip first N saved posts
 
 ## 0.3.0
 **Committed 2023-07-04**
