@@ -12,6 +12,7 @@ numpy==1.24.1
 opencv-python==4.7.0.68
 praw==7.7.0
 prawcore==2.3.0
+public-ip==0.12
 redgifs==1.6.1
 requests==2.28.2
 update-checker==0.18.0
