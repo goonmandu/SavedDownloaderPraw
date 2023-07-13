@@ -5,6 +5,7 @@ import requests
 import praw
 import emoji
 from credentials import *
+from ipstack_key import IPSTACK_KEY
 from excepts import *
 import signal
 
@@ -130,7 +131,7 @@ def get_all_comments(submission):
     return comment_tree
 
 
-def download_requests(addr, path, output_name, ext, reddit_instance, subreddit):
+def download_requests(addr, path, output_name, ext, reddit_instance, subreddit, post_raw):
     global current_directory
     web_filename = addr.split("/")[-1]
 
@@ -160,6 +161,16 @@ def download_requests(addr, path, output_name, ext, reddit_instance, subreddit):
             d_img.write(resp.content)
             d_img.close()
             image_number += 1
+    elif "twitter" in addr:
+        prev_url: str = post_raw.preview["images"][0]["source"]["url"]
+        download_requests(prev_url,
+                          path,
+                          output_name,
+                          prev_url[prev_url.strip("https://external-preview.redd.it/").find(".")+len("https://external-preview.redd.it/")+1
+                                   :prev_url.strip("https://external-preview.redd.it/").find("?")+len("https://external-preview.redd.it/")],
+                          reddit_instance,
+                          subreddit,
+                          post_raw)
     else:
         final_filename = f"{output_name}-{web_filename[:4]}.{ext}"
         current_directory = f"{path}/{final_filename}"

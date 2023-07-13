@@ -57,7 +57,8 @@ def main():
                               sanitized_title,
                               current.url.split('.')[-1],
                               reddit,
-                              current.subreddit)
+                              current.subreddit,
+                              saved_post)
 
         except ResponseException as e:  # Handle HTTP errors
             exception_string = str(e)
@@ -76,6 +77,7 @@ def main():
 
         except requests.exceptions.MissingSchema as e:
             sys.stderr.write(f"Unknown error:\n{e}")
+        pass
 
     print("Done.")
 

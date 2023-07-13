@@ -1,5 +1,10 @@
 # Changelog
-Last updated: 2023-07-10 11:07 (KST; UTC+9)
+Last updated: 2023-07-13 21:01 (KST; UTC+9)
+
+## 0.4.0
+**Committed 2023-07-13**
+- Now supports Twitter URLs via Reddit-cached previews
+  - (The script does not access Twitter.)
 
 ## 0.3.3
 **Committed 2023-07-10**
