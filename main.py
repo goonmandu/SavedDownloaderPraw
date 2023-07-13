@@ -1,3 +1,4 @@
+import os
 from prawcore.exceptions import OAuthException, ResponseException
 from postdata import PostData
 from utils import *
@@ -5,7 +6,9 @@ from utils import *
 
 def main():
     signal.signal(signal.SIGINT, crash_handler)
-    if (current_country := get_current_country()) in countries_that_censor:
+    current_country = get_current_country()
+    print("\n\nNOTICE! You might have seen a bunch of errors pass by really quick. They don't really matter, and are safe to ignore.\n\n")
+    if current_country in countries_that_censor:
         if not input(f"WARNING: You are trying to download from {'an' if current_country[0].lower() in ['a', 'e' ,'i', 'o', 'u'] else 'a'} "
                      f"{current_country} IP.\n"
                      f"Downloads of explicit material may fail due to internet censorship.\n"
