@@ -5,7 +5,7 @@ import requests
 import praw
 import emoji
 from credentials import *
-from ipstack_key import IPSTACK_KEY
+import public_ip
 from excepts import *
 import signal
 
@@ -24,38 +24,38 @@ requests_header = {
 
 
 countries_that_censor = [
-    "Armenia"
-    "South Korea",
-    "Bahrain"
-    "Belarus",
-    "Brunei",
-    "Syria",
-    "Saudi Arabia",
-    "Yemen",
-    "Oman",
-    "Eritrea"
-    "Equatorial Guinea",
-    "Uganda",
-    "Tanzania",
-    "Iran",
-    "Kuwait",
-    "Qatar",
-    "United Arab Emirates",
-    "Turkmenistan",
-    "Uzbekistan",
-    "Afghanistan",
-    "Pakistan"
-    "China",
-    "Nepal",
-    "Bangladesh",
-    "Vietnam",
-    "Laos",
-    "Thailand",
-    "Cambodia",
-    "Malaysia",
-    "Indonesia",
-    "North Korea",  # But no one's gonna be using it here anyway LULW
-    "Maldives"
+    "Armenia", "AM",
+    "South Korea", "KR",
+    "Bahrain", "BH",
+    "Belarus", "BY",
+    "Brunei", "BN",
+    "Syria", "SY",
+    "Saudi Arabia", "SA",
+    "Yemen", "YE",
+    "Oman", "OM",
+    "Eritrea", "ER",
+    "Equatorial Guinea", "GQ",
+    "Uganda", "UG",
+    "Tanzania", "TZ",
+    "Iran", "IR",
+    "Kuwait", "KW",
+    "Qatar", "QA",
+    "United Arab Emirates", "AE",
+    "Turkmenistan", "TM",
+    "Uzbekistan", "UZ",
+    "Afghanistan", "AF",
+    "Pakistan", "PK",
+    "China", "CN",
+    "Nepal", "NP",
+    "Bangladesh", "BD",
+    "Vietnam", "VN",
+    "Laos", "LA",
+    "Thailand", "TH",
+    "Cambodia", "KH",
+    "Malaysia", "MY",
+    "Indonesia", "ID",
+    "North Korea", "KP",  # But no one's gonna be using it here anyway LULW
+    "Maldives", "MV"
 ]
 
 
@@ -210,13 +210,13 @@ def replace_invalid_chars(filepath: str) -> str:
 
 
 def get_current_country():
-    api_key = IPSTACK_KEY
-    url = f"http://api.ipstack.com/check?access_key={api_key}"
+    url = f"https://ipinfo.io/{public_ip.get()}?token=424093cb98c93b"
     try:
         response = requests.get(url)
         data = response.json()
-        return data["country_name"]
-    except requests.exceptions.RequestException:
+        return data["country"]
+    except requests.exceptions.RequestException as e:
+        print(e)
         return "Unknown"
 
 

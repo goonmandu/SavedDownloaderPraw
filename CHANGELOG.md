@@ -1,5 +1,9 @@
 # Changelog
-Last updated: 2023-07-13 21:01 (KST; UTC+9)
+Last updated: 2023-07-13 21:35 (KST; UTC+9)
+
+## 0.4.1
+**Committed 2023-07-13**
+- Changed IP geolocation service provider from ipstack to ipinfo
 
 ## 0.4.0
 **Committed 2023-07-13**
