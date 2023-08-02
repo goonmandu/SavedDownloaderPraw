@@ -5,9 +5,9 @@ import requests
 import praw
 import emoji
 from credentials import *
-import public_ip
 from excepts import *
 import signal
+import json
 
 current_directory = ""
 existing_files = []
@@ -57,6 +57,8 @@ countries_that_censor = [
     "North Korea", "KP",  # But no one's gonna be using it here anyway LULW
     "Maldives", "MV"
 ]
+
+all_countries = json.load(open("countries.json", "r"))
 
 
 def crash_handler(exit_signal, frame):
@@ -210,7 +212,10 @@ def replace_invalid_chars(filepath: str) -> str:
 
 
 def get_current_country():
-    url = f"https://ipinfo.io/{public_ip.get()}?token=424093cb98c93b"
+    checkip_response = requests.get("https://checkip.amazonaws.com")
+    ipaddress = checkip_response.content.decode("utf-8").rstrip()
+
+    url = f"https://ipinfo.io/{ipaddress}?token=424093cb98c93b"
     try:
         response = requests.get(url)
         data = response.json()
@@ -218,6 +223,13 @@ def get_current_country():
     except requests.exceptions.RequestException as e:
         print(e)
         return "Unknown"
+
+
+def get_fullname_of_country_code(twoltrcode):
+    for country in all_countries:
+        if country["code"] == twoltrcode:
+            return country["name"]
+    return "Unknown Country"
 
 
 def main():
@@ -234,12 +246,8 @@ def main():
     rule34 = "https://rule34.xxx//samples/6724/sample_e8c7589fbace0156bf8c61a34d057cbc.jpg?7674649"
     catbox = "https://files.catbox.moe/9jsbl9.png"
     gallery = "https://www.reddit.com/gallery/13l1zm4"
-    post = reddit.submission("14g8qld").is_self
-    print(post)
 
-    #create_directory("test")
-
-    #print(extract_source_reddit_gallery(reddit, gallery, subreddit))
+    print(get_fullname_of_country_code("KR"))
 
 
 if __name__ == "__main__":

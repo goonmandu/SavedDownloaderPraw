@@ -1,5 +1,12 @@
 # Changelog
-Last updated: 2023-07-13 21:35 (KST; UTC+9)
+Last updated: 2023-08-02 14:38 (KST; UTC+9)
+
+## 0.4.2
+**Committed 2023-08-02**
+- Now gets client IP address from `checkip.amazonaws.com` instead of relying on module `public_ip`
+- Displays full name current country
+  - e.g. Instead of `TW`, it now shows `China, Republic of`
+- Changed text formatting for print statements in `main.py`
 
 ## 0.4.1
 **Committed 2023-07-13**

@@ -1,4 +1,3 @@
-import os
 from prawcore.exceptions import OAuthException, ResponseException
 from postdata import PostData
 from utils import *
@@ -6,11 +5,11 @@ from utils import *
 
 def main():
     signal.signal(signal.SIGINT, crash_handler)
-    current_country = get_current_country()
-    print("\n\nNOTICE! You might have seen a bunch of errors pass by really quick. They don't really matter, and are safe to ignore.\n\n")
-    if current_country in countries_that_censor:
-        if not input(f"WARNING: You are trying to download from {'an' if current_country[0].lower() in ['a', 'e' ,'i', 'o', 'u'] else 'a'} "
-                     f"{current_country} IP.\n"
+    print("Checking country of IP address... ", end="")
+    current_country = get_fullname_of_country_code(country_code := get_current_country())
+    print(current_country)
+    if country_code in countries_that_censor:
+        if not input(f"WARNING: You are trying to download from an IP from {current_country}.\n"
                      f"Downloads of explicit material may fail due to internet censorship.\n"
                      f"Are you sure you want to continue?\n"
                      f"Enter 'Yes' to download anyway, or anything else to quit. ") == "Yes":
@@ -46,8 +45,8 @@ def main():
         try:
             current = PostData(saved_post, get_comments=False)
             print(f"Downloading #{idx + 1} / {posts}:    {round((idx + 1) * 100 / posts, 1)}%   "
-                  f"(r/{current.subreddit}, {current.title if len(current.title) < 24 else current.title[:24]}) "
-                  f"[{saved_post.id}]")
+                  f"[{saved_post.id}] "
+                  f"(r/{current.subreddit}, {current.title if len(current.title) < 50 else current.title[:50]})")
 
             if saved_post.is_self:
                 sys.stderr.write("Found a post without any attached media. Skipping.")
