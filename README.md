@@ -28,3 +28,6 @@ I will add utility functions of the original code to this rewrite eventually.
 - [x] Skip already downloaded media
 
 <a name="footnote_1">1</a>: Unrealistic goal, scrapped. Different websites have different download methods and would require separate functions for each website, which `download_requests` already achieves.
+
+## Acknowledgements
+- Countries JSON file (`countries.json`) modified from https://gist.github.com/keeguon/2310008, unknown license
