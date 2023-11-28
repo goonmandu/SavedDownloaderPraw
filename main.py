@@ -91,6 +91,10 @@ def main():
 
     print("Done.")
 
+    if input("To delete duplicate media downloaded prior to the 6-character identifier, enter \"Y\". ") == "Y":
+        delete_files_recursive("./download")
+
+    print("Done.")
 
 if __name__ == "__main__":
     main()

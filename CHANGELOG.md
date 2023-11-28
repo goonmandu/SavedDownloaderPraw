@@ -1,5 +1,10 @@
 # Changelog
-Last updated: 2023-08-02 14:38 (KST; UTC+9)
+Last updated: 2023-11-28 15:23 (ET; UTC-5)
+
+## 0.5.0
+**Committed 2023-11-28**
+- Added functionality to delete 4-char identifier files that were duplicates of the new 6-char identifier files.
+- (Undocumented: between 0.4.2 and 0.5.0) Skips posts that raise any previously unhandled exceptions
 
 ## 0.4.2
 **Committed 2023-08-02**

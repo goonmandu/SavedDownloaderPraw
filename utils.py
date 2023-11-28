@@ -8,6 +8,7 @@ from credentials import *
 from excepts import *
 import signal
 import json
+import hashlib
 
 current_directory = ""
 existing_files = []
@@ -240,6 +241,58 @@ def get_fullname_of_country_code(twoltrcode):
         if country["code"] == twoltrcode:
             return country["name"]
     return "Unknown Country"
+
+
+def hash_file(file_path):
+    """Compute the SHA-256 hash of a file."""
+    sha256 = hashlib.sha256()
+    with open(file_path, "rb") as f:
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256.update(byte_block)
+    return sha256.hexdigest()
+
+
+def rename_images(directory):
+    """Rename all image files in a directory to their hash values with original extensions."""
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".bmp", "gifv", "webp", ".mp4", ".mkv")):
+                print(f"Current file: {file}")
+                file_path = os.path.join(root, file)
+                hash_value = hash_file(file_path)
+                extension = os.path.splitext(file)[1]
+                new_name = f"{hash_value[:32]}{extension}"  # Use original extension in the renamed file
+                new_path = os.path.join(root, new_name)
+
+                # Ensure the new file name does not exceed 255 bytes
+                if len(new_path) <= 255:
+                    os.rename(file_path, new_path)
+
+
+def is_substring(sub, full):
+    return sub in full
+
+
+def delete_files_recursive(directory):
+    for root, dirs, files in os.walk(directory):
+        files.sort(key=len, reverse=True)
+
+        for i in range(len(files)):
+            current_file = os.path.splitext(files[i])[0]  # Exclude the file extension
+            current_file_path = os.path.join(root, files[i])
+            print(f"Checking {current_file_path}")
+
+            if current_file_path.endswith("gifv"):
+                os.remove(current_file_path)
+                continue
+
+            for j in range(i + 1, len(files)):
+                potential_substring = os.path.splitext(files[j])[0]  # Exclude the file extension
+                potential_substring_path = os.path.join(root, files[j])
+
+                if is_substring(potential_substring, current_file):
+                    if os.path.exists(potential_substring_path):
+                        os.remove(potential_substring_path)
 
 
 def main():
