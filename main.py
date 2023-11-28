@@ -9,10 +9,11 @@ def main():
     current_country = get_fullname_of_country_code(country_code := get_current_country())
     print(current_country)
     if country_code in countries_that_censor:
-        if not input(f"WARNING: You are trying to download from an IP from {current_country}.\n"
+        if not input(f"\nWARNING: You are trying to download from an IP from {current_country}.\n"
                      f"Downloads of explicit material may fail due to internet censorship.\n"
                      f"Are you sure you want to continue?\n"
                      f"Enter 'Yes' to download anyway, or anything else to quit. ") == "Yes":
+            print("\nDownload aborted.")
             exit(4)
 
     posts = int(input("Enter an integer number of saved posts to download, from 1 to 1000. "))
@@ -39,6 +40,9 @@ def main():
 
     create_directory("download")
     for idx, saved_post in enumerate(reddit.user.me().saved(limit=posts)):
+        if isinstance(saved_post, praw.models.Comment):
+            print(f"Downloading #{idx + 1} / {posts}: Saved comment. Skipping...")
+            continue
         if idx < skip - 1:
             print(f"Skipping over #{idx+1}", end="\r")
             continue
@@ -54,6 +58,8 @@ def main():
 
             create_subreddit_directory(current.subreddit)
             sanitized_title = replace_invalid_chars(remove_non_ascii(unemojify(current.title)))
+            if len(sanitized_title) > 127:
+                sanitized_title = sanitized_title[:127]
             download_requests(current.url,
                               f"download/{current.subreddit}/images",
                               sanitized_title,
@@ -79,7 +85,9 @@ def main():
 
         except requests.exceptions.MissingSchema as e:
             sys.stderr.write(f"Unknown error:\n{e}")
-        pass
+
+        except Exception as e:
+            sys.stderr.write(f"Unknown error:\n{e}")
 
     print("Done.")
 

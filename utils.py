@@ -141,7 +141,7 @@ def download_requests(addr, path, output_name, ext, reddit_instance, subreddit, 
         raise SelfVideoNotSupportedError
     elif "redgifs" in addr:
         ext = "mp4"
-        final_filename = f"{output_name}-{web_filename[:4]}.{ext}"  # posts with same title
+        final_filename = f"{output_name}-{web_filename[:6]}.{ext}"  # posts with same title
         current_directory = f"{path}/{final_filename}"
         if final_filename in existing_files:
             return
@@ -154,7 +154,7 @@ def download_requests(addr, path, output_name, ext, reddit_instance, subreddit, 
         image_number = 1
         for link in extract_source_reddit_gallery(reddit_instance, addr, subreddit):
             ext = link.split(".")[-1]
-            final_filename = f"{output_name}-glry{image_number}-{web_filename[:4]}.{ext}"
+            final_filename = f"{output_name}-glry{image_number}-{web_filename[:6]}.{ext}"
             current_directory = f"{path}/{final_filename}"
             if final_filename in existing_files:
                 return
@@ -164,7 +164,17 @@ def download_requests(addr, path, output_name, ext, reddit_instance, subreddit, 
             d_img.close()
             image_number += 1
     elif "twitter" in addr:
-        prev_url: str = post_raw.preview["images"][0]["source"]["url"]
+        try:
+            prev_url: str = post_raw.preview["images"][0]["source"]["url"]
+        except AttributeError:
+            try:
+                prev_url: str = post_raw.media_metadata[len(post_raw.media_metadata)-1]["s"]["u"]
+                print(prev_url)
+                input()
+            except Exception as e:
+                print(e)
+                print(json.dumps(post_raw))
+                return
         download_requests(prev_url,
                           path,
                           output_name,
@@ -174,7 +184,7 @@ def download_requests(addr, path, output_name, ext, reddit_instance, subreddit, 
                           subreddit,
                           post_raw)
     else:
-        final_filename = f"{output_name}-{web_filename[:4]}.{ext}"
+        final_filename = f"{output_name}-{web_filename[:6]}.{ext}"
         current_directory = f"{path}/{final_filename}"
         if final_filename in existing_files:
             return
@@ -247,7 +257,7 @@ def main():
     catbox = "https://files.catbox.moe/9jsbl9.png"
     gallery = "https://www.reddit.com/gallery/13l1zm4"
 
-    print(get_fullname_of_country_code("KR"))
+    post = reddit.submission("15fia9u")
 
 
 if __name__ == "__main__":
