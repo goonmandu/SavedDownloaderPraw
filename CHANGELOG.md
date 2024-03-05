@@ -1,6 +1,10 @@
 # Changelog
-Last updated: 2023-11-28 15:23 (ET; UTC-5)
+Last updated: 2024-03-05 10:13 (ET; UTC-5)
 
+## 0.6.0
+**Committed 2024-03-05**
+- Added image copy and hash functions (`dupe_and_hash.py`)
+- 
 ## 0.5.0
 **Committed 2023-11-28**
 - Added functionality to delete 4-char identifier files that were duplicates of the new 6-char identifier files.
