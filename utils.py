@@ -9,6 +9,7 @@ from excepts import *
 import signal
 import json
 import hashlib
+import shutil
 
 current_directory = ""
 existing_files = []
@@ -295,12 +296,22 @@ def delete_files_recursive(directory):
                         os.remove(potential_substring_path)
 
 
+def copy_directory(source, destination):
+    try:
+        # Copy directory recursively
+        shutil.copytree(source, destination)
+        print(f"Directory '{source}' copied to '{destination}' successfully.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+
 def main():
     reddit = praw.Reddit(client_id=CLIENT_ID,
                          client_secret=SECRET,
                          password=PASSWORD,
                          username=USERNAME,
                          user_agent=USERAGENT)
+
 
     imgur = "https://i.imgur.com/ZwmhVma.jpg"
     ireddit = "https://i.redd.it/2i0b7d3d2ura1.jpg"
